@@ -1,0 +1,10 @@
+# Dependencias
+node_modules/
+
+# Logs y archivos de entorno
+npm-debug.log*
+.env
+.DS_Store
+
+# Builds/Dist
+dist/
