@@ -1,5 +1,5 @@
 import express from "express"
-import apiRoutes from "./routes/ex.mjs"
+import apiRoutes from "./routes/lista.js"
 
 const PORT = 3000
 const app = express()
