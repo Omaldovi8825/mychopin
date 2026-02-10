@@ -1,0 +1,25 @@
+{
+  "name": "mychopin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Omaldovi8825/mychopin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Omaldovi8825/mychopin/issues"
+  },
+  "homepage": "https://github.com/Omaldovi8825/mychopin#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,8 +1,4 @@
-export interface Producto {
+export interface ProductoLista {
   nombre: string
-  cantidad: string | number
-}
-
-export interface ProductoLista extends Producto {
   checked: boolean
 }

@@ -1,28 +1,20 @@
 import { useState } from "react"
 import type { ChangeEvent, FormEvent } from "../types/common"
-import type { Producto, ProductoLista } from "../types/producto"
+import type { ProductoLista } from "../types/producto"
 import Header from "./Header"
-
-const estaInicialProducto: Producto = {
-  nombre: "",
-  cantidad: "",
-}
 
 function NuevaLista() {
   const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([])
-  const [formProducto, setFormProducto] = useState(estaInicialProducto)
+  const [producto, setProducto] = useState("")
 
-  const handleChangeProducto = ({ target }: ChangeEvent) => {
-    const { name, value } = target
-    setFormProducto((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+  const handleChange = ({ target }: ChangeEvent) => {
+    const { value } = target
+    setProducto(value)
   }
 
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
-    setNuevaLista((prev) => [...prev, { ...formProducto, checked: false }])
+    setNuevaLista((prev) => [...prev, { nombre: producto, checked: false }])
   }
 
   const toggleCheck = (nombre: string) => {
@@ -51,28 +43,13 @@ function NuevaLista() {
             <input
               type="text"
               placeholder="Escribe el producto..."
-              name="nombre"
-              value={formProducto.nombre}
-              onChange={handleChangeProducto}
+              value={producto}
+              onChange={handleChange}
               className="form-control"
             />
           </div>
-          <div className="row">
-            <div className="col-6">
-              <label className="form-label">Cantidad</label>
-              <input
-                type="number"
-                name="cantidad"
-                value={formProducto.cantidad}
-                onChange={handleChangeProducto}
-                className="form-control"
-              />
-            </div>
-            <div className="col-6 d-flex align-items-end">
-              <button className="btn btn-outline-primary w-100">
-                Agregar +
-              </button>
-            </div>
+          <div className="col-6 d-flex align-items-end">
+            <button className="btn btn-outline-primary w-100">Agregar +</button>
           </div>
         </form>
       </div>
@@ -81,7 +58,6 @@ function NuevaLista() {
           <thead>
             <tr>
               <th>Producto</th>
-              <th>Cantidad</th>
               <th>Check</th>
               <th>Quitar</th>
             </tr>
@@ -90,7 +66,6 @@ function NuevaLista() {
             {nuevaLista.map((producto) => (
               <tr key={producto.nombre}>
                 <td>{producto.nombre}</td>
-                <td>{producto.cantidad}</td>
                 <td>
                   <input
                     type="checkbox"
