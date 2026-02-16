@@ -15,6 +15,7 @@ function NuevaLista() {
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
     setNuevaLista((prev) => [...prev, { nombre: producto, checked: false }])
+    setProducto("")
   }
 
   const toggleCheck = (nombre: string) => {
@@ -31,8 +32,12 @@ function NuevaLista() {
     }
   }
 
-  const quitarProducto = (nombre: string) => {}
-
+  const quitarProducto = (nombre: string) => {
+  const copiaProductos = [...nuevaLista];
+  setNuevaLista(
+    copiaProductos.filter((p) => p.nombre !== nombre)
+  );
+};
   return (
     <section className="row mb-4">
       <Header titulo="Nueva Lista" />
