@@ -15,6 +15,7 @@ function NuevaLista() {
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
     setNuevaLista((prev) => [...prev, { nombre: producto, checked: false }])
+    setProducto("")
   }
 
   const toggleCheck = (nombre: string) => {
@@ -31,7 +32,10 @@ function NuevaLista() {
     }
   }
 
-  const quitarProducto = (nombre: string) => {}
+  const quitarProducto = (nombre: string) => {
+  const listaFiltrada = nuevaLista.filter((p) => p.nombre !== nombre)
+  setNuevaLista(listaFiltrada)  
+};
 
   return (
     <section className="row mb-4">
