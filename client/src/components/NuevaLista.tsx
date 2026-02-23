@@ -1,41 +1,49 @@
-import { useState } from "react"
-import type { ChangeEvent, FormEvent } from "../types/common"
-import type { ProductoLista } from "../types/producto"
-import Header from "./Header"
+import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "../types/common";
+import type { ProductoLista } from "../types/producto";
+import Header from "./Header";
 
 function NuevaLista() {
-  const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([])
-  const [producto, setProducto] = useState("")
+  const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([]);
+  const [producto, setProducto] = useState("");
 
   const handleChange = ({ target }: ChangeEvent) => {
-    const { value } = target
-    setProducto(value)
-  }
+    const { value } = target;
+    setProducto(value);
+  };
 
   const agregarProducto = (ev: FormEvent) => {
-    ev.preventDefault()
-    setNuevaLista((prev) => [...prev, { nombre: producto, checked: false }])
-    setProducto("")
-  }
+    ev.preventDefault();
+    const encontrarDuplicado = nuevaLista.some(
+      (p) => p.nombre.toLowerCase() === producto.trim().toLowerCase(),
+    );
+    if (!encontrarDuplicado) {
+      setNuevaLista((prev) => [
+        ...prev,
+        { nombre: producto.trim(), checked: false },
+      ]);
+      setProducto("");
+    }
+  };
 
   const toggleCheck = (nombre: string) => {
-    const copiaProductos = [...nuevaLista]
-    const index = copiaProductos.findIndex((p) => p.nombre === nombre)
+    const copiaProductos = [...nuevaLista];
+    const index = copiaProductos.findIndex((p) => p.nombre === nombre);
     if (index >= 0) {
       copiaProductos[index] = {
         ...copiaProductos[index],
         checked: !copiaProductos[index].checked,
-      }
-      setNuevaLista(copiaProductos)
+      };
+      setNuevaLista(copiaProductos);
     } else {
-      console.log("error al encontrar producto")
+      console.log("error al encontrar producto");
     }
-  }
+  };
 
   const quitarProducto = (nombre: string) => {
-  const listaFiltrada = nuevaLista.filter((p) => p.nombre !== nombre)
-  setNuevaLista(listaFiltrada)  
-};
+    const listaFiltrada = nuevaLista.filter((p) => p.nombre !== nombre);
+    setNuevaLista(listaFiltrada);
+  };
 
   return (
     <section className="row mb-4">
@@ -105,7 +113,7 @@ function NuevaLista() {
         </ul>
       </div>
     </section>
-  )
+  );
 }
 
-export default NuevaLista
+export default NuevaLista;
