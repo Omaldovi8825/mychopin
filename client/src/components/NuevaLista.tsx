@@ -33,11 +33,10 @@ function NuevaLista() {
   }
 
   const quitarProducto = (nombre: string) => {
-  const copiaProductos = [...nuevaLista];
-  setNuevaLista(
-    copiaProductos.filter((p) => p.nombre !== nombre)
-  );
+  const listaFiltrada = nuevaLista.filter((p) => p.nombre !== nombre)
+  setNuevaLista(listaFiltrada)  
 };
+
   return (
     <section className="row mb-4">
       <Header titulo="Nueva Lista" />
