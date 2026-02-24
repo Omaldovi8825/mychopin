@@ -17,13 +17,13 @@ function NuevaLista() {
     const encontrarDuplicado = nuevaLista.some(
       (p) => p.nombre.toLowerCase() === producto.trim().toLowerCase(),
     );
-    if (!encontrarDuplicado) {
+    if (!encontrarDuplicado && producto.trim() !== "") {
       setNuevaLista((prev) => [
         ...prev,
         { nombre: producto.trim(), checked: false },
       ]);
-      setProducto("");
     }
+    setProducto("");
   };
 
   const toggleCheck = (nombre: string) => {
