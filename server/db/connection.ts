@@ -1,24 +1,22 @@
-import { Collection, MongoClient } from "mongodb"
+import { Collection, Db, MongoClient } from "mongodb"
+import { envs } from "../envs.js"
 
 class MongoConnection {
-  private collectionListas!: Collection
-  private client!: MongoClient
+  private client: MongoClient
+  private db!: Db
 
-  async connect() {
-    if (!this.client) {
-      const DB_URI = process.env.MONGO_DB_URI || ""
-      const DB_NAME = process.env.DB_NAME || ""
-      const DB_COLLECTION = process.env.DB_COLLECTION || ""
-      this.client = new MongoClient(DB_URI)
-      await this.client.connect()
-      const db = this.client.db(DB_NAME)
-      this.collectionListas = db.collection(DB_COLLECTION)
-      console.log("MongoDB connected")
-    }
+  constructor() {
+    this.client = new MongoClient(envs.DB_URI)
   }
 
-  get listas() {
-    return this.collectionListas
+  async connect() {
+    await this.client.connect()
+    this.db = this.client.db(envs.DB_NAME)
+    console.log("MongoDB connected")
+  }
+
+  get listas(): Collection {
+    return this.db.collection(envs.DB_COLLECTION)
   }
 
   async close() {
