@@ -1,5 +1,5 @@
-import ListasRecientes from "./components/ListasRecientes"
-import NuevaLista from "./components/NuevaLista"
+import ListasRecientes from './components/ListasRecientes'
+import NuevaLista from './components/NuevaLista'
 
 function App() {
   return (
