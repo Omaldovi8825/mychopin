@@ -14,11 +14,16 @@ function ListasRecientes({ listasRecientes }: propsListasRecientes) {
     <section className="row">
       <Header titulo="Listas recientes" />
       {listasRecientes.map(lista => (
-        <div key={lista._id}>
-          <p>{formatoFecha(lista.fecha)}</p>
-          <ul>
+        <div key={lista._id} className="col-12 col-md-6 col-lg-4 mb-3">
+          <p className="bg-dark text-white text-center py-2 mb-0">
+            {formatoFecha(lista.fecha)}
+          </p>
+          <ul className="list-unstyled border p-2 mb-0">
             {lista.items.map(i => (
-              <li key={i}>{i}</li>
+              <li key={i} className="d-flex justify-content-between mb-2">
+                <span>{i}</span>
+                <button className="btn">+</button>
+              </li>
             ))}
           </ul>
         </div>
