@@ -12,15 +12,17 @@ function NuevaLista() {
     setProducto(value);
   };
 
+  const productoSinEspacios = producto.trim();
+
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault();
     const encontrarDuplicado = nuevaLista.some(
-      (p) => p.nombre.toLowerCase() === producto.trim().toLowerCase(),
+      (p) => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
     );
-    if (!encontrarDuplicado && producto.trim() !== "") {
+    if (!encontrarDuplicado && productoSinEspacios) {
       setNuevaLista((prev) => [
         ...prev,
-        { nombre: producto.trim(), checked: false },
+        { nombre: productoSinEspacios, checked: false },
       ]);
     }
     setProducto("");
