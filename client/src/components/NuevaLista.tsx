@@ -12,19 +12,21 @@ function NuevaLista() {
     setProducto(value)
   }
 
+  const productoSinEspacios = producto.trim();
+
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
     const encontrarDuplicado = nuevaLista.some(
-      p => p.nombre.toLowerCase() === producto.trim().toLowerCase(),
-    )
-    if (!encontrarDuplicado) {
-      setNuevaLista(prev => [
+      (p) => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
+    );
+    if (!encontrarDuplicado && productoSinEspacios) {
+      setNuevaLista((prev) => [
         ...prev,
-        { nombre: producto.trim(), checked: false },
-      ])
-      setProducto('')
+        { nombre: productoSinEspacios, checked: false },
+      ]);
     }
-  }
+    setProducto("");
+  };
 
   const toggleCheck = (nombre: string) => {
     const copiaProductos = [...nuevaLista]
