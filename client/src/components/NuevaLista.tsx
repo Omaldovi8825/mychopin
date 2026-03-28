@@ -3,11 +3,11 @@ import type { ChangeEvent, FormEvent } from '../types/common'
 import type { ProductoLista } from '../types/producto'
 import Header from './Header'
 
-type Props = {
+type nuevaListaProps = {
   guardarLista: (nuevaLista: string[]) => Promise<void>
 }
 
-function NuevaLista({ guardarLista }: Props) {
+function NuevaLista({ guardarLista }: nuevaListaProps) {
   const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([])
   const [producto, setProducto] = useState('')
 
@@ -54,6 +54,7 @@ function NuevaLista({ guardarLista }: Props) {
   const seleccionarListas = () => {
     const productoSinCheck = nuevaLista.map(p => p.nombre)
     guardarLista(productoSinCheck)
+    setNuevaLista([])
   }
 
   return (
@@ -114,9 +115,7 @@ function NuevaLista({ guardarLista }: Props) {
           <div className="text-end">
             <button
               className="btn btn-outline-secondary"
-              onClick={() => {
-                seleccionarListas()
-              }}
+              onClick={seleccionarListas}
             >
               Guardar lista
             </button>

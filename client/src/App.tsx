@@ -11,7 +11,7 @@ function App() {
   const traerListas = async () => {
     try {
       const res = await Api.get('listas')
-      setListasRecientes(res.data.data)
+      setListasRecientes(res.data)
     } catch (error) {
       console.error(error)
     }
