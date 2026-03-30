@@ -3,7 +3,11 @@ import type { ChangeEvent, FormEvent } from '../types/common'
 import type { ProductoLista } from '../types/producto'
 import Header from './Header'
 
-function NuevaLista() {
+type nuevaListaProps = {
+  guardarLista: (nuevaLista: string[]) => Promise<void>
+}
+
+function NuevaLista({ guardarLista }: nuevaListaProps) {
   const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([])
   const [producto, setProducto] = useState('')
 
@@ -12,21 +16,21 @@ function NuevaLista() {
     setProducto(value)
   }
 
-  const productoSinEspacios = producto.trim();
+  const productoSinEspacios = producto.trim()
 
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
     const encontrarDuplicado = nuevaLista.some(
-      (p) => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
-    );
+      p => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
+    )
     if (!encontrarDuplicado && productoSinEspacios) {
-      setNuevaLista((prev) => [
+      setNuevaLista(prev => [
         ...prev,
         { nombre: productoSinEspacios, checked: false },
-      ]);
+      ])
     }
-    setProducto("");
-  };
+    setProducto('')
+  }
 
   const toggleCheck = (nombre: string) => {
     const copiaProductos = [...nuevaLista]
@@ -45,6 +49,12 @@ function NuevaLista() {
   const quitarProducto = (nombre: string) => {
     const listaFiltrada = nuevaLista.filter(p => p.nombre !== nombre)
     setNuevaLista(listaFiltrada)
+  }
+
+  const seleccionarListas = () => {
+    const productoSinCheck = nuevaLista.map(p => p.nombre)
+    guardarLista(productoSinCheck)
+    setNuevaLista([])
   }
 
   return (
@@ -103,7 +113,12 @@ function NuevaLista() {
             </tbody>
           </table>
           <div className="text-end">
-            <button className="btn btn-outline-secondary">Guardar lista</button>
+            <button
+              className="btn btn-outline-secondary"
+              onClick={seleccionarListas}
+            >
+              Guardar lista
+            </button>
           </div>
         </div>
         <div>
