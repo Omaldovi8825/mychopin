@@ -1,15 +1,28 @@
 import type { Lista } from '../types/lista'
 import Header from './Header'
+import type { ProductoLista } from '../types/producto'
 
 interface propsListasRecientes {
   listasRecientes: Lista[]
+  nuevaLista: ProductoLista[]
+  setNuevaLista: React.Dispatch<React.SetStateAction<ProductoLista[]>>
 }
 
 const formatoFecha = (fecha: Lista['fecha']) => {
   return new Date(fecha).toLocaleDateString('es-MX')
 }
 
-function ListasRecientes({ listasRecientes }: propsListasRecientes) {
+function ListasRecientes({
+  listasRecientes,
+  nuevaLista,
+  setNuevaLista,
+}: propsListasRecientes) {
+  const pasarListasRecientes = (i: string) => {
+    const encontrarDuplicado = nuevaLista.some(p => p.nombre === i)
+    if (!encontrarDuplicado) {
+      setNuevaLista(prev => [...prev, { nombre: i, checked: false }])
+    }
+  }
   return (
     <section className="row">
       <Header titulo="Listas recientes" />
@@ -22,7 +35,9 @@ function ListasRecientes({ listasRecientes }: propsListasRecientes) {
             {lista.items.map(i => (
               <li key={i} className="d-flex justify-content-between mb-2">
                 <span>{i}</span>
-                <button className="btn">+</button>
+                <button onClick={() => pasarListasRecientes(i)} className="btn">
+                  +
+                </button>
               </li>
             ))}
           </ul>
