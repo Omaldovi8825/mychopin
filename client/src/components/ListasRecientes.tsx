@@ -3,13 +3,21 @@ import Header from './Header'
 
 interface propsListasRecientes {
   listasRecientes: Lista[]
+  pasarProducto: (producto: string) => void
 }
 
 const formatoFecha = (fecha: Lista['fecha']) => {
   return new Date(fecha).toLocaleDateString('es-MX')
 }
 
-function ListasRecientes({ listasRecientes }: propsListasRecientes) {
+function ListasRecientes({
+  listasRecientes,
+  pasarProducto,
+}: propsListasRecientes) {
+  const pasarListasRecientes = (i: string) => {
+    pasarProducto(i)
+  }
+
   return (
     <section className="row">
       <Header titulo="Listas recientes" />
@@ -22,7 +30,9 @@ function ListasRecientes({ listasRecientes }: propsListasRecientes) {
             {lista.items.map(i => (
               <li key={i} className="d-flex justify-content-between mb-2">
                 <span>{i}</span>
-                <button className="btn">+</button>
+                <button onClick={() => pasarListasRecientes(i)} className="btn">
+                  +
+                </button>
               </li>
             ))}
           </ul>
