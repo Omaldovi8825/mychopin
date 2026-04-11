@@ -32,6 +32,13 @@ function App() {
     }
   }
 
+  const pasarProducto = (producto: string) => {
+    const encontrarDuplicado = nuevaLista.some(p => p.nombre === producto)
+    if (!encontrarDuplicado) {
+      setNuevaLista(prev => [...prev, { nombre: producto, checked: false }])
+    }
+  }
+
   return (
     <div className="container">
       <NuevaLista
@@ -41,8 +48,7 @@ function App() {
       />
       <ListasRecientes
         listasRecientes={listasRecientes}
-        nuevaLista={nuevaLista}
-        setNuevaLista={setNuevaLista}
+        pasarProducto={pasarProducto}
       />
     </div>
   )

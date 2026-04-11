@@ -1,11 +1,9 @@
 import type { Lista } from '../types/lista'
 import Header from './Header'
-import type { ProductoLista } from '../types/producto'
 
 interface propsListasRecientes {
   listasRecientes: Lista[]
-  nuevaLista: ProductoLista[]
-  setNuevaLista: React.Dispatch<React.SetStateAction<ProductoLista[]>>
+  pasarProducto: (producto: string) => void
 }
 
 const formatoFecha = (fecha: Lista['fecha']) => {
@@ -14,15 +12,12 @@ const formatoFecha = (fecha: Lista['fecha']) => {
 
 function ListasRecientes({
   listasRecientes,
-  nuevaLista,
-  setNuevaLista,
+  pasarProducto,
 }: propsListasRecientes) {
   const pasarListasRecientes = (i: string) => {
-    const encontrarDuplicado = nuevaLista.some(p => p.nombre === i)
-    if (!encontrarDuplicado) {
-      setNuevaLista(prev => [...prev, { nombre: i, checked: false }])
-    }
+    pasarProducto(i)
   }
+
   return (
     <section className="row">
       <Header titulo="Listas recientes" />
