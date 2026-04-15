@@ -5,12 +5,14 @@ import Header from './Header'
 
 type nuevaListaProps = {
   guardarLista: (nuevaLista: string[]) => Promise<void>
+  pasarProducto: (producto: string) => void
   nuevaLista: ProductoLista[]
   setNuevaLista: React.Dispatch<React.SetStateAction<ProductoLista[]>>
 }
 
 function NuevaLista({
   guardarLista,
+  pasarProducto,
   nuevaLista,
   setNuevaLista,
 }: nuevaListaProps) {
@@ -21,19 +23,9 @@ function NuevaLista({
     setProducto(value)
   }
 
-  const productoSinEspacios = producto.trim()
-
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
-    const encontrarDuplicado = nuevaLista.some(
-      p => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
-    )
-    if (!encontrarDuplicado && productoSinEspacios) {
-      setNuevaLista(prev => [
-        ...prev,
-        { nombre: productoSinEspacios, checked: false },
-      ])
-    }
+    pasarProducto(producto)
     setProducto('')
   }
 

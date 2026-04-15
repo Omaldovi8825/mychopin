@@ -33,9 +33,15 @@ function App() {
   }
 
   const pasarProducto = (producto: string) => {
-    const encontrarDuplicado = nuevaLista.some(p => p.nombre === producto)
-    if (!encontrarDuplicado) {
-      setNuevaLista(prev => [...prev, { nombre: producto, checked: false }])
+    const productoSinEspacios = producto.trim()
+    const encontrarDuplicado = nuevaLista.some(
+      p => p.nombre.toLowerCase() === productoSinEspacios.toLowerCase(),
+    )
+    if (!encontrarDuplicado && productoSinEspacios) {
+      setNuevaLista(prev => [
+        ...prev,
+        { nombre: productoSinEspacios, checked: false },
+      ])
     }
   }
 
@@ -45,6 +51,7 @@ function App() {
         guardarLista={guardarLista}
         nuevaLista={nuevaLista}
         setNuevaLista={setNuevaLista}
+        pasarProducto={pasarProducto}
       />
       <ListasRecientes
         listasRecientes={listasRecientes}
