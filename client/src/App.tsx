@@ -16,9 +16,9 @@ function App() {
       const res = await Api.get('listas')
       const resultadoListas = res.data
       const preSugerencias: string[] = []
-      for (let value of resultadoListas) {
-        for (let value2 of value.items) {
-          const valoresMinusculas = value2.toLowerCase()
+      for (const lista of resultadoListas) {
+        for (const itemsLista of lista.items) {
+          const valoresMinusculas = itemsLista.toLowerCase()
           if (!preSugerencias.includes(valoresMinusculas)) {
             preSugerencias.push(valoresMinusculas)
           }
