@@ -9,11 +9,24 @@ import { Api } from './utils/ApiCalls'
 function App() {
   const [listasRecientes, setListasRecientes] = useState<Lista[]>([])
   const [nuevaLista, setNuevaLista] = useState<ProductoLista[]>([])
+  const [sugerencias, setSugerencias] = useState<string[]>([])
 
   const traerListas = async () => {
     try {
       const res = await Api.get('listas')
-      setListasRecientes(res.data)
+      const resultadoListas = res.data
+      const preSugerencias: string[] = []
+      for (let value of resultadoListas) {
+        for (let value2 of value.items) {
+          const valoresMinusculas = value2.toLowerCase()
+          if (!preSugerencias.includes(valoresMinusculas)) {
+            preSugerencias.push(valoresMinusculas)
+          }
+        }
+      }
+      console.log(preSugerencias)
+      setListasRecientes(resultadoListas)
+      setSugerencias(preSugerencias)
     } catch (error) {
       console.error(error)
     }
@@ -52,6 +65,7 @@ function App() {
         nuevaLista={nuevaLista}
         setNuevaLista={setNuevaLista}
         pasarProducto={pasarProducto}
+        sugerencias={sugerencias}
       />
       <ListasRecientes
         listasRecientes={listasRecientes}

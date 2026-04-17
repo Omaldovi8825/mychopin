@@ -8,6 +8,7 @@ type nuevaListaProps = {
   pasarProducto: (producto: string) => void
   nuevaLista: ProductoLista[]
   setNuevaLista: React.Dispatch<React.SetStateAction<ProductoLista[]>>
+  sugerencias: string[]
 }
 
 function NuevaLista({
@@ -15,6 +16,7 @@ function NuevaLista({
   pasarProducto,
   nuevaLista,
   setNuevaLista,
+  sugerencias,
 }: nuevaListaProps) {
   const [producto, setProducto] = useState('')
 
@@ -23,9 +25,21 @@ function NuevaLista({
     setProducto(value)
   }
 
+  const sugerenciasEncontradas = sugerencias.filter(p => {
+    if (!producto) {
+      return false
+    }
+    return p.includes(producto.toLowerCase())
+  })
+
   const agregarProducto = (ev: FormEvent) => {
     ev.preventDefault()
     pasarProducto(producto)
+    setProducto('')
+  }
+
+  const agregarSugerencia = (p: string) => {
+    pasarProducto(p)
     setProducto('')
   }
 
@@ -87,19 +101,19 @@ function NuevaLista({
               </tr>
             </thead>
             <tbody>
-              {nuevaLista.map(producto => (
-                <tr key={producto.nombre}>
-                  <td>{producto.nombre}</td>
+              {nuevaLista.map(prod => (
+                <tr key={prod.nombre}>
+                  <td>{prod.nombre}</td>
                   <td>
                     <input
                       type="checkbox"
-                      checked={producto.checked}
-                      onChange={() => toggleCheck(producto.nombre)}
+                      checked={prod.checked}
+                      onChange={() => toggleCheck(prod.nombre)}
                     />
                   </td>
                   <td>
                     <button
-                      onClick={() => quitarProducto(producto.nombre)}
+                      onClick={() => quitarProducto(prod.nombre)}
                       className="btn btn-sm btn-outline-primary"
                     >
                       <i className="bi bi-trash"></i>
@@ -121,12 +135,16 @@ function NuevaLista({
         <div>
           <p>Sugerencias:</p>
           <ul className="list-unstyled d-flex gap-2 m-0 p-0">
-            <li>
-              <button className="btn btn-sm btn-primary">Huevo</button>
-            </li>
-            <li>
-              <button className="btn btn-sm btn-primary">leche</button>
-            </li>
+            {sugerenciasEncontradas.map(p => (
+              <li key={p}>
+                <button
+                  className="btn btn-sm btn-primary"
+                  onClick={() => agregarSugerencia(p)}
+                >
+                  {p}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
